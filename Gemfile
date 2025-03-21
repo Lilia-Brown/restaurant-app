@@ -64,3 +64,5 @@ group :test do
   gem "rspec-rails", git: "https://github.com/rspec/rspec-rails"
   gem "factory_bot_rails", "~> 6.4"
 end
+
+gem "fast_jsonapi", "~> 1.5"
