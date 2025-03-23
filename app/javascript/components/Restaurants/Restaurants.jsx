@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Button from '@mui/material/Button'
+import CustomButton from '../shared/CustomButton'
 import NewRestaurantForm from './NewRestaurantForm'
 import React, { useState, useEffect } from 'react'
 import RestaurantItem from './RestaurantItem'
@@ -98,15 +99,7 @@ const Restaurants = () => {
       </List>
 
       { !isCreating &&
-        <ButtonWrapper>
-          <Button
-            variant='contained'
-            color='#74c6e1'
-            onClick={() => { showForm() }}
-          >
-            Add Restaurant
-          </Button>
-        </ButtonWrapper>
+        <CustomButton onClick={showForm} buttonText='Add Restaurant' />
       }
 
       {

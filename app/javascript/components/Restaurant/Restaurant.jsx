@@ -38,15 +38,15 @@ const Restaurant = () => {
   const [loaded, setLoaded] = useState(false)
   const [restaurant, setRestaurant] = useState([])
 
+  const catchError = (error) => { setError(error.message) }
+
   useEffect(() => {
     const slug = window.location.pathname.split('/')[2]
     axios.get(`/api/v1/restaurants/${slug}.json`)
       .then(response => {
         setRestaurant(response.data.data.attributes)
       })
-      .catch(error => {
-        console.error('There was an error fetching the restaurant!', error);
-      })
+      .catch(catchError)
       .finally(setLoaded(true))
   }, [])
 
