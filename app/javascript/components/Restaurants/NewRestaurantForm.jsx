@@ -1,3 +1,4 @@
+import InputField from '../shared/InputField'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -55,42 +56,34 @@ const NewRestaurantForm = ({ newRestaurant, handleChange, handleSubmit }) =>{
     <FormWrapper>
       <form onSubmit={handleSubmit}>
         <RestaurantHeadline>Want to add a new Restaurant?</RestaurantHeadline>
-        <Field>
-          <input
-            onChange={handleChange}
-            type='text'
-            name='name'
-            placeholder='Restaurant Name'
-            value={newRestaurant.name}
-          />
-        </Field>
-        <Field>
-          <input
-            onChange={handleChange}
-            type='text'
-            name='cuisine'
-            placeholder='Restaurant Cuisine'
-            value={newRestaurant.cuisine}
-          />
-        </Field>
-        <Field>
-          <input
-            onChange={handleChange}
-            type='text'
-            name='img_url'
-            placeholder='Restaurant Image URL'
-            value={newRestaurant.img_url}
-            />
-        </Field>
-        <Field>
-          <input
-            onChange={handleChange}
-            type='text'
-            name='website'
-            placeholder='Restaurant Website'
-            value={newRestaurant.website}
-          />
-        </Field>
+        <InputField
+          onChange={handleChange}
+          type='text'
+          name='name'
+          placeholder='Restaurant Name'
+          value={newRestaurant.name}
+        />
+        <InputField
+          onChange={handleChange}
+          type='text'
+          name='cuisine'
+          placeholder='Restaurant Cuisine'
+          value={newRestaurant.cuisine}
+        />
+        <InputField
+          onChange={handleChange}
+          type='text'
+          name='img_url'
+          placeholder='Restaurant Image URL'
+          value={newRestaurant.img_url}
+        />
+        <InputField
+          onChange={handleChange}
+          type='text'
+          name='website'
+          placeholder='Restaurant Website'
+          value={newRestaurant.website}
+        />
         <SubmitBtn type='Submit'>Create Restaurant</SubmitBtn>
       </form>
     </FormWrapper>
