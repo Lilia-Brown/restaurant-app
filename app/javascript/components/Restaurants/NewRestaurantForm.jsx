@@ -1,4 +1,5 @@
 import InputField from '../shared/InputField'
+import AddressField from './AddressField'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -51,7 +52,7 @@ const SubmitBtn = styled.button`
     border-color: #74c6e1;
   }
 `
-const NewRestaurantForm = ({ newRestaurant, handleChange, handleSubmit }) =>{
+const NewRestaurantForm = ({ newRestaurant, handleChange, handleSubmit, handleAddressChange }) => {
   return (
     <FormWrapper>
       <form onSubmit={handleSubmit}>
@@ -83,6 +84,10 @@ const NewRestaurantForm = ({ newRestaurant, handleChange, handleSubmit }) =>{
           name='website'
           placeholder='Restaurant Website'
           value={newRestaurant.website}
+        />
+        <AddressField
+          address={newRestaurant.address}
+          handleAddressChange={handleAddressChange}
         />
         <SubmitBtn type='Submit'>Create Restaurant</SubmitBtn>
       </form>

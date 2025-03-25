@@ -17,7 +17,7 @@ module Api
       private
 
       def verify_request_method
-        head :method_not_allowed unless request.get?
+        head(:method_not_allowed) unless request.get? || request.head?
       end
     end
   end

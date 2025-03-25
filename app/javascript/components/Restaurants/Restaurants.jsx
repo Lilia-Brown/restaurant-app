@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Button from '@mui/material/Button'
 import CustomButton from '../shared/CustomButton'
 import NewRestaurantForm from './NewRestaurantForm'
 import React, { useState, useEffect } from 'react'
@@ -24,11 +23,6 @@ const List = styled.div`
   gap: 20px;
   margin-top: 20px;
 `
-const ButtonWrapper = styled.div`
-  text-align: center;
-  padding-top: 20px;
-  color: #74c6e1;
-`
 const Error = styled.div`
   width: 100%;
   color: rgb(255, 80, 44);
@@ -40,6 +34,7 @@ const Error = styled.div`
 `
 
 const Restaurants = () => {
+  const [address, setAddress] = useState('')
   const defaultRestaurant = { name: '', cuisine: '', website: '', img_url: '', address: '' }
   const [error, setError] = useState('')
   const [isCreating, setIsCreating] = useState(false)
@@ -64,9 +59,17 @@ const Restaurants = () => {
     setNewRestaurant({ ...newRestaurant, [e.target.name]: e.target.value })
   }
 
+  // Handle address separately
+  const handleAddressChange = (place) => {
+    if (place.geometry) {
+      setAddress(place.formatted_address)
+    }
+  }
+
   // Create a new restaurant
   const handleSubmit = (e) => {
     e.preventDefault()
+    newRestaurant.address = address
 
     axios.post(restaurantUrl, { ...newRestaurant })
     .then( (resp) => {
@@ -108,6 +111,7 @@ const Restaurants = () => {
           newRestaurant={newRestaurant}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
+          handleAddressChange={handleAddressChange}
         />
       }
 
