@@ -1,3 +1,4 @@
+import AddressField from '../Restaurants/AddressField'
 import axios from 'axios'
 import CustomButton from '../shared/CustomButton'
 import CustomError from '../shared/CustomError'
@@ -38,6 +39,7 @@ const Table = styled.ul`
 `
 
 const Restaurant = () => {
+  const [address, setAddress] = useState('')
   const [error, setError] = useState('')
   const [isEditing, setIsEditing] = useState(false)
   const [loaded, setLoaded] = useState(false)
@@ -61,6 +63,7 @@ const Restaurant = () => {
   // Update restaurant details
   const saveRestaurant = () => {
     const slug = window.location.pathname.split('/')[2]
+    restaurant.address = address
 
     axios.patch(restaurantUrl, { ...restaurant })
     .then( (resp) => {
@@ -79,6 +82,13 @@ const Restaurant = () => {
   // Modify text in Restaurant fields
   const handleEdit = (e) => {
     setRestaurant(Object.assign({}, restaurant, {[e.target.name]: e.target.value}))
+  }
+
+  // Handle address separately
+  const handleAddressChange = (place) => {
+    if (place.geometry) {
+      setAddress(place.formatted_address)
+    }
   }
 
   return (
@@ -123,12 +133,10 @@ const Restaurant = () => {
             </li>
             <li key='address'>Address:&nbsp;
               { isEditing ?
-                <InputField
-                  onChange={handleEdit}
-                  type='text'
-                  name='address'
-                  placeholder='Restaurant Address'
-                  value={restaurant.address}
+                <AddressField
+                  address={address}
+                  handleAddressChange={handleAddressChange}
+                  defaultValue={restaurant.address}
                 /> :
                 restaurant.address
               }

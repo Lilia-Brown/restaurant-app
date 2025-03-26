@@ -25,7 +25,7 @@ const Field = styled.div`
   }
 `
 
-const AddressField = ({ address, handleAddressChange }) => {
+const AddressField = ({ address, handleAddressChange, defaultValue }) => {
   const [environmentVars, setEnvironmentVars] = useState(null)
   const [loaded, setLoaded] = useState(false)
   
@@ -51,7 +51,7 @@ const AddressField = ({ address, handleAddressChange }) => {
             }}
             id="address"
             placeholder="Restaurant Address"
-              defaultValue={address}
+            defaultValue={defaultValue}
             />
           </Field>
       }
