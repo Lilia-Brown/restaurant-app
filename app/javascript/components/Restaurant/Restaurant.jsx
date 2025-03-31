@@ -5,6 +5,7 @@ import CustomError from '../shared/CustomError'
 import Dish from './Dish'
 import InputField from '../shared/InputField'
 import { Link } from 'react-router-dom'
+import NewDishForm from './NewDishForm'
 import React, { Fragment, useState, useEffect } from 'react'
 import styled from 'styled-components'
 
@@ -40,13 +41,19 @@ const Table = styled.ul`
 `
 
 const Restaurant = () => {
+  const defaultDish = { name: '', description: '', img_url: '' , restaurant_id: '' }
+
   const [address, setAddress] = useState('')
   const [dishes, setDishes] = useState([])
   const [error, setError] = useState('')
+  const [isCreating, setIsCreating] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [newDish, setNewDish] = useState(defaultDish)
   const [restaurant, setRestaurant] = useState([])
+
   const slug = window.location.pathname.split('/')[2]
+  const dishUrl = '/api/v1/dishes'
   const restaurantUrl = `/api/v1/restaurants/${slug}`
 
   const catchError = (error) => { setError(error.message) }
@@ -108,6 +115,32 @@ const Restaurant = () => {
     }
   }
 
+  // Show form for adding dish
+  const showForm = () => {
+    setIsCreating(true)
+    setError('')
+  }
+
+  // Modify text in Dish fields
+  const handleChange = (e) => {
+    setNewDish(Object.assign({}, newDish, {[e.target.name]: e.target.value}))
+  }
+
+  // Create a dish
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    newDish.restaurant_id = restaurant.id
+    
+    axios.post(dishUrl, { ...newDish })
+    .then( (resp) => {
+      setDishes([...dishes, resp.data.data])
+      setNewDish(defaultDish)
+      setError('')
+    })
+    .catch(catchError)
+    .finally(() => setIsCreating(false))
+  }
+
   return (
     <Wrapper>
       {
@@ -159,7 +192,25 @@ const Restaurant = () => {
               }
             </li>
           </Table>
+
+          { !isCreating &&
+            <CustomButton
+              onClick={() => { showForm() }}
+              buttonText='Add Dish'
+            />
+          }
+
+          { 
+            isCreating &&
+            <NewDishForm
+              newDish={newDish}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+            />
+          }
+
           <CustomError error={error} />
+
           <Table>
             {faveDishes}
           </Table>

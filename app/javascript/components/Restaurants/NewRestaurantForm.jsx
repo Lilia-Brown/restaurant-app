@@ -17,26 +17,6 @@ const RestaurantHeadline = styled.div`
   padding: 15px 0;
   font-weight: bold;
 `
-const Field = styled.div`
-  border-radius: 4px;
-
-  input {
-    width: 96%;
-    min-height:20px;
-    border-radius: 4px;
-    border: 1px solid #E6E6E6;
-    margin: 10px 0;
-    padding: 10px;
-  }
-
-  textarea {
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid #E6E6E6;
-    margin: 10px 0;
-    padding: 10px;      
-  }
-`
 const SubmitBtn = styled.button`
   color: #fff;
   background-color: #74c6e1;
