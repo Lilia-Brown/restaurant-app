@@ -1,4 +1,6 @@
 class Restaurant < ApplicationRecord
+  has_many :dishes, dependent: :destroy
+
   validates :name, presence: true, uniqueness: true
   validates :cuisine, presence: true
   validates :img_url, presence: true

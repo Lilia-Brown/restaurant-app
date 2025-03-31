@@ -37,14 +37,33 @@ RSpec.describe 'Restaurants', type: :request do
     end
   end
 
-  describe 'show: request a particular restaurant' do
-    it 'should get the expected response data' do
-      get "#{restaurant_path}/#{restaurant_params[:slug]}"
+  describe 'show: request a particular restaurant with its dishes' do
+    let!(:restaurant) { create(:restaurant, slug: 'test-restaurant') }
+    let!(:dishes) do
+      [
+        create(:dish, name: 'Dish 1', img_url: 'https://placecats.com/100/100', description: 'Delicious dish 1', restaurant: restaurant),
+        create(:dish, name: 'Dish 2', img_url: 'https://placecats.com/200/200', description: 'Delicious dish 2', restaurant: restaurant),
+        create(:dish, name: 'Dish 3', img_url: 'https://placecats.com/300/300', description: 'Delicious dish 3', restaurant: restaurant)
+      ]
+    end
+
+    it 'returns the restaurant with its associated dishes' do
+      get "/api/v1/restaurants/#{restaurant.slug}"
 
       expect(response).to have_http_status(:ok)
-      parsed_response = JSON.parse(response.body)
-      expect(parsed_response["data"]).to be_a(Hash)
-      expect(parsed_response["data"]).to include(expected_attributes)
+      json_response = JSON.parse(response.body)
+
+      # Check restaurant data
+      expect(json_response['data']['attributes']['name']).to eq(restaurant.name)
+
+      # Check included dishes
+      included_dishes = json_response['included'].select { |item| item['type'] == 'dish' }
+      expect(included_dishes.size).to eq(3)
+      included_dishes.each_with_index do |dish, index|
+        expect(dish['attributes']['name']).to eq(dishes[index].name)
+        expect(dish['attributes']['img_url']).to eq(dishes[index].img_url)
+        expect(dish['attributes']['description']).to eq(dishes[index].description)
+      end
     end
   end
 

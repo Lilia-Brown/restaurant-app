@@ -10,9 +10,9 @@ module Api
       end
 
       def show
-        restaurant = Restaurant.find_by(slug: params[:slug])
+        restaurant = Restaurant.includes(:dishes).find_by(slug: params[:slug])
 
-        render json: RestaurantSerializer.new(restaurant).serialized_json
+        render json: RestaurantSerializer.new(restaurant, { include: %i[dishes] }).serialized_json
       end
 
       def create
