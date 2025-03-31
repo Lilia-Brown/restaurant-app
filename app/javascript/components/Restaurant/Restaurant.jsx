@@ -2,6 +2,7 @@ import AddressField from '../Restaurants/AddressField'
 import axios from 'axios'
 import CustomButton from '../shared/CustomButton'
 import CustomError from '../shared/CustomError'
+import Dish from './Dish'
 import InputField from '../shared/InputField'
 import { Link } from 'react-router-dom'
 import React, { Fragment, useState, useEffect } from 'react'
@@ -40,6 +41,7 @@ const Table = styled.ul`
 
 const Restaurant = () => {
   const [address, setAddress] = useState('')
+  const [dishes, setDishes] = useState([])
   const [error, setError] = useState('')
   const [isEditing, setIsEditing] = useState(false)
   const [loaded, setLoaded] = useState(false)
@@ -55,14 +57,29 @@ const Restaurant = () => {
     axios.get(`${restaurantUrl}.json`)
       .then(response => {
         setRestaurant(response.data.data.attributes)
+        setDishes(response.data.included)
       })
       .catch(catchError)
       .finally(setLoaded(true))
   }, [])
 
+  // Set dishes
+  let faveDishes
+
+  if (dishes && dishes.length > 0) {
+    faveDishes = dishes.map( (dish, index) => {
+      return (
+        <Dish
+          key={index}
+          id={dish.id}
+          attributes={dish.attributes}
+        />
+      )
+    })
+  }
+
   // Update restaurant details
   const saveRestaurant = () => {
-    const slug = window.location.pathname.split('/')[2]
     restaurant.address = address
 
     axios.patch(restaurantUrl, { ...restaurant })
@@ -143,6 +160,9 @@ const Restaurant = () => {
             </li>
           </Table>
           <CustomError error={error} />
+          <Table>
+            {faveDishes}
+          </Table>
         </Fragment>
       }
     </Wrapper>
