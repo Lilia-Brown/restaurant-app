@@ -1,5 +1,6 @@
 import axios from 'axios'
 import CustomButton from '../shared/CustomButton'
+import CustomError from '../shared/CustomError'
 import NewRestaurantForm from './NewRestaurantForm'
 import PageWrapper from '../shared/PageWrapper'
 import React, { useState, useEffect } from 'react'
@@ -17,15 +18,6 @@ const List = styled.div`
   align-items: center;
   gap: 20px;
   margin-top: 20px;
-`
-const Error = styled.div`
-  width: 100%;
-  color: rgb(255, 80, 44);
-  border: 1px solid rgb(255, 80, 44);
-  border-radius: 4px;
-  margin-top: 8px;
-  text-align:center;
-  padding: 4px;
 `
 
 const Restaurants = () => {
@@ -110,10 +102,7 @@ const Restaurants = () => {
         />
       }
 
-      {
-        error &&
-        <Error>{error}</Error>
-      }
+      <CustomError error={error} />
     </PageWrapper>
   )
 }
