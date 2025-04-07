@@ -1,14 +1,9 @@
 import axios from 'axios'
 import CustomError from '../shared/CustomError'
+import PageWrapper from '../shared/PageWrapper'
 import React, { Fragment, useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  text-align: center;
-  margin: 0 auto;
-  max-width: 600px;
-  padding: 20px;
-`
 const Table = styled.ul`
   text-align: left;
   list-style-type: none;
@@ -70,7 +65,7 @@ const Dishes = () => {
   }
 
   return (
-    <Wrapper>
+    <PageWrapper>
       {
         loaded &&
         <Fragment>
@@ -83,7 +78,7 @@ const Dishes = () => {
           </Table>
         </Fragment>
       }
-    </Wrapper>
+    </PageWrapper>
   )
 }
 

@@ -6,15 +6,10 @@ import Dish from './Dish'
 import InputField from '../shared/InputField'
 import { Link } from 'react-router-dom'
 import NewDishForm from './NewDishForm'
+import PageWrapper from '../shared/PageWrapper'
 import React, { Fragment, useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  text-align: center;
-  margin: 0 auto;
-  max-width: 600px;
-  padding: 20px;
-`
 const Header = styled.div`
   color: #333;
   font-size: 2rem;
@@ -142,7 +137,7 @@ const Restaurant = () => {
   }
 
   return (
-    <Wrapper>
+    <PageWrapper>
       {
         loaded &&
         <Fragment>
@@ -216,7 +211,7 @@ const Restaurant = () => {
           </Table>
         </Fragment>
       }
-    </Wrapper>
+    </PageWrapper>
   )
 }
 

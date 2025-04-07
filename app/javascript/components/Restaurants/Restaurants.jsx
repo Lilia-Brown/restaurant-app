@@ -1,16 +1,11 @@
 import axios from 'axios'
 import CustomButton from '../shared/CustomButton'
 import NewRestaurantForm from './NewRestaurantForm'
+import PageWrapper from '../shared/PageWrapper'
 import React, { useState, useEffect } from 'react'
 import RestaurantItem from './RestaurantItem'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  text-align: center;
-  margin: 0 auto;
-  max-width: 600px;
-  padding: 20px;
-`
 const RestaurantHeader = styled.div`
   color: #333;
   font-size: 2rem;
@@ -94,7 +89,7 @@ const Restaurants = () => {
   })
 
   return (
-    <Wrapper>
+    <PageWrapper>
       <RestaurantHeader>I Sure Do Like to Eat</RestaurantHeader>
 
       <List>
@@ -119,7 +114,7 @@ const Restaurants = () => {
         error &&
         <Error>{error}</Error>
       }
-    </Wrapper>
+    </PageWrapper>
   )
 }
 
