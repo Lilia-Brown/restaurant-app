@@ -20,3 +20,18 @@ dishes = Dish.create([
   { name: "Chef's Mess", img_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/20R0Ac8kUtRE-B0OXbCRnA/348s.jpg', description: '2 eggs scrambled w/spuds, bacon, cheese, mushrooms, tomato, sour cream, green onions, and choice of toast', restaurant_id: 3 },
   { name: 'Fried Chicken 4 Piece Dinner', img_url: 'https://s3-media0.fl.yelpcdn.com/bphoto/guZVdCZYy57D_ILOeYYRrA/o.jpg', description: 'Rocky Jr. free range chicken, garlic mashers, braised ham hock collards', restaurant_id: 4 }
 ])
+
+tags = [
+  'breakfast', 'lunch', 'dinner', 'snack', 'dessert',
+  'good-for-kids', 'gluten-free', 'vegan', 'vegetarian',
+  'spicy', 'low-carb', 'high-protein', 'quick-meal'
+]
+
+tags.each do |tag_name|
+  Tag.find_or_create_by(name: tag_name)
+end
+
+Dish.find_by(name: 'Momo Spicy Noodle')&.tags << Tag.where(name: [ 'spicy', 'dinner', 'lunch' ]).to_a
+Dish.find_by(name: 'Spaghetti and Meatballs')&.tags << Tag.where(name: [ 'dinner', 'lunch', 'good-for-kids' ]).to_a
+Dish.find_by(name: "Chef's Mess")&.tags << Tag.where(name: [ 'breakfast', 'high-protein' ]).to_a
+Dish.find_by(name: 'Fried Chicken 4 Piece Dinner')&.tags << Tag.where(name: [ 'lunch', 'dinner' ]).to_a
