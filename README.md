@@ -17,7 +17,7 @@ Simple CRUD app for Restaurants and Dishes
 
 - Clone this repository and cd into the directory
 ```
-get clone https://github.com/Lilia-Brown/restaurant-app.git
+git clone https://github.com/Lilia-Brown/restaurant-app.git
 cd restaurant-app
 ```
 
