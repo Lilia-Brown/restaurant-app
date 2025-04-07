@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :restaurants, param: :slug
-      resources :dishes, only: %i[create update destroy]
+      resources :dishes, only: %i[create destroy index show]
 
       # Environment variables endpoint
       get "environment", to: "environment#index"
